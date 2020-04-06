@@ -26,12 +26,19 @@ var roleBuilder = {
         }
 
         if(creep.memory.building) {
-            var targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-            if(targets.length) {
-                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                }
+            let targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+            let muster = false;
+
+            //don't just stand there like a dumbass if there's nothing to build
+            if (targets.length < 1) {
+                targets = logicPathFinding.muster(creep);
+                muster = true;
             }
+            
+            if(creep.build(targets[0]) == ERR_NOT_IN_RANGE || muster) {
+                creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+            }
+
         } else {
             let sourceTarget;
             if (!creep.memory.target) {

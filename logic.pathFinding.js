@@ -2,6 +2,7 @@
 FIND_SOURCES_ACTIVE
 Memory
 module
+FIND_FLAGS
  */
 
 var logicPathFinding = {
@@ -52,6 +53,18 @@ var logicPathFinding = {
         if(index > -1) {
             Memory.sources[creep.memory.target].splice(index, 1);
         }
+    },
+
+    /** @param {Creep} creep
+        @returns {Array}
+        **/
+    muster: function(creep) {
+        let targets = creep.room.find(FIND_FLAGS, {
+            filter: (flag) => {
+                return (flag.name.includes(creep.memory.role));
+            }
+        });
+        return targets;
     }
 };
 
