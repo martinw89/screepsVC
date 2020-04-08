@@ -33,7 +33,8 @@ var logicSpawn = {
                 debug ? console.log(Game.spawns[spawnName].spawning) : null;
                 if (Game.spawns[spawnName].spawning == null && Game.spawns[spawnName].spawnCreep(creepPrototypes[creepRole], 'dryRunName', {'dryRun': true}) == OK) {
                     //OK, let's actually make that new creep
-                    let newName = creepRole + Game.time;
+                    //Include spawn name in creep name to avoid the INCREDIBLY rare edge case of two spawns simultaneously making the same creep with the same name because I am neurotic
+                    let newName = creepRole + spawnName + Game.time;
                     debug ? console.log('Spawning new ' + creepRole + ': ' + newName) : null;
                     Game.spawns[spawnName].spawnCreep(creepPrototypes[creepRole], newName, {memory: {role: creepRole}});
                 }

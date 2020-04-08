@@ -43,13 +43,14 @@ var logicPathFinding = {
     },
 
     attachToSource: function(creep) {
-        if ( ! Memory.sources[creep.memory.target].includes(creep.id) && creep.id != null) {
-            Memory.sources[creep.memory.target].push(creep.id);
+        // Also check to make sure not null (e.g., dead creep)
+        if ( ! Memory.sources[creep.memory.target].includes(creep.name) && creep.id != null) {
+            Memory.sources[creep.memory.target].push(creep.name);
         }
     },
 
     detachFromSource: function(creep) {
-        let index = Memory.sources[creep.memory.target].indexOf(creep.id);
+        let index = Memory.sources[creep.memory.target].indexOf(creep.name);
         if(index > -1) {
             Memory.sources[creep.memory.target].splice(index, 1);
         }

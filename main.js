@@ -31,6 +31,13 @@ module.exports.loop = function () {
 
     for(let name in Memory.creeps) {
         if(!Game.creeps[name]) {
+            //don't show this dead creep as using an energy source
+            for (let sourceID in Memory.sources) {
+                let i = Memory.sources[sourceID].indexOf(name);
+                if (i > -1) {
+                    Memory.sources[sourceID].splice(i, 1);
+                }
+            }
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
         }
