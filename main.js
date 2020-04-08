@@ -14,7 +14,7 @@ let roleUpgrader = require('role.upgrader');
 let roleBuilder = require('role.builder');
 let roleRepairer = require('role.repairer');
 let roleTower = require('role.tower');
-let logicSpawnDespawn = require('logic.spawnDespawn');
+let logicSpawn = require('logic.spawn');
 let logicDefend = require('logic.defend');
 let logicPathFinding = require('logic.pathFinding');
 
@@ -61,9 +61,9 @@ module.exports.loop = function () {
         'repairer': [MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY]
     };
 
-    logicSpawnDespawn.spawnCreeps(creepsDesired, creepPrototypes);
+    logicSpawn.spawnCreeps(creepsDesired, creepPrototypes);
 
-    logicSpawnDespawn.echoSpawners();
+    logicSpawn.echoSpawners();
 
     for(let name in Game.creeps) {
         let creep = Game.creeps[name];

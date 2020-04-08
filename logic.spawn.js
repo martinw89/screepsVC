@@ -1,46 +1,8 @@
-/* global Game, _, FIND_MY_CREEPS, OK, console, module*/
+/* global Game, _, FIND_MY_CREEPS, OK, module*/
 
 let debug = false;
 
-var logicSpawnDespawn = {
-    // spawnHarvesters: function() {
-    //     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-    //     console.log('Harvesters: ' + harvesters.length);
-    //
-    //     if(harvesters.length < 10 && Game.spawns[spawnName].room.energyAvailable >= 350) {
-    //         var newName = 'Harvester' + Game.time;
-    //         console.log('Spawning new harvester: ' + newName);
-    //         Game.spawns[spawnName].spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName,
-    //             {memory: {role: 'harvester'}});
-    //     }
-    // },
-    //
-    // spawnBuilders: function() {
-    //     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-    //     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-    //     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-    //     console.log('Builders: ' + builders.length);
-    //
-    //     if(builders.length < 10 && harvesters.length >= 10 && upgraders.length >= 10 && Game.spawns[spawnName].room.energyAvailable >= 350) {
-    //         var newName = 'Builder' + Game.time;
-    //         console.log('Spawning new builder: ' + newName);
-    //         Game.spawns[spawnName].spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName,
-    //             {memory: {role: 'builder'}});
-    //     }
-    // },
-    //
-    // spawnUpgraders: function() {
-    //     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-    //     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-    //     console.log('Upgraders: ' + upgraders.length);
-    //
-    //     if(upgraders.length < 10 && harvesters.length >= 10 && Game.spawns[spawnName].room.energyAvailable >= 350) {
-    //         var newName = 'Upgrader' + Game.time;
-    //         console.log('Spawning new upgrader: ' + newName);
-    //         Game.spawns[spawnName].spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName,
-    //             {memory: {role: 'upgrader'}});
-    //     }
-    // }
+var logicSpawn = {
 
     spawnCreeps: function(creepsDesired, creepPrototypes, override = '') {
         debug ? console.log('Spawning creeps') : null;
@@ -91,7 +53,11 @@ var logicSpawnDespawn = {
                     {align: 'left', opacity: 0.8});
             }
         }
+    },
+
+    generateBodyArrays: function(energyCapacity) {
+        // do some magic math to figure out body parts based on energy capacity
     }
 };
 
-module.exports = logicSpawnDespawn;
+module.exports = logicSpawn;
