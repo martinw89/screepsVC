@@ -5,7 +5,6 @@
     CARRY,
     FIND_SOURCES_ACTIVE
     FIND_MY_STRUCTURES
-    console
     module
     Memory
     STRUCTURE_TOWER*/
@@ -16,6 +15,8 @@ let roleBuilder = require('role.builder');
 let roleRepairer = require('role.repairer');
 let roleTower = require('role.tower');
 let logicSpawnDespawn = require('logic.spawnDespawn');
+let logicDefend = require('logic.defend');
+let logicPathFinding = require('logic.pathFinding')
 
 Memory.sources = {};
 for (let room in Game.rooms) {
@@ -27,6 +28,7 @@ for (let room in Game.rooms) {
 module.exports.loop = function () {
     let debug = false;
     debug ? console.log(Game) : null;
+
     for(let name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
@@ -34,35 +36,34 @@ module.exports.loop = function () {
         }
     }
 
+    for (let room in Game.rooms) {
+        let underAttack = logicDefend.checkInvaders(Game.rooms[room]);
+        if (underAttack) {
+            if (logicDefend.checkCriticalAttack(Game.rooms[room])) {
+                Game.rooms[room].controller.activateSafeMode();
+                console.log('Holy crap we\'re all gonna die!');
+            }
+        }
+    }
+
+
     let creepsDesired = {
         'upgrader': 5,
-        'harvester': 3,
-        'builder': 5,
-        'repairer': 2
+        'harvester': 5,
+        'builder': 3,
+        'repairer': 4
     };
 
     let creepPrototypes = {
-        'harvester': [MOVE, MOVE, MOVE, WORK, CARRY, CARRY],
-        'builder': [WORK,WORK,CARRY,MOVE,MOVE],
-        'upgrader': [WORK,WORK,CARRY,MOVE,MOVE],
-        'repairer': [WORK,WORK,CARRY,MOVE,MOVE]
+        'harvester': [MOVE,MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY,CARRY],
+        'builder': [MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY],
+        'upgrader': [MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY],
+        'repairer': [MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY]
     };
 
     logicSpawnDespawn.spawnCreeps(creepsDesired, creepPrototypes);
 
     logicSpawnDespawn.echoSpawners();
-    // logicSpawn.spawnHarvesters();
-    // logicSpawn.spawnUpgraders();
-    // logicSpawn.spawnBuilders();
-
-    // if(Game.spawns['Spawn1'].spawning) {
-    //     var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
-    //     Game.spawns['Spawn1'].room.visual.text(
-    //         '🛠️' + spawningCreep.memory.role,
-    //         Game.spawns['Spawn1'].pos.x + 1,
-    //         Game.spawns['Spawn1'].pos.y,
-    //         {align: 'left', opacity: 0.8});
-    // }
 
     for(let name in Game.creeps) {
         let creep = Game.creeps[name];
