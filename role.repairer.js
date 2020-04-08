@@ -7,12 +7,10 @@ ERR_NOT_IN_RANGE
 module
 */
 
-let logicPathFinding = require('logic.pathFinding');
-
 var roleRepairer = {
 
     /** @param {Creep} creep **/
-    run: function(creep) {
+    run: function(creep, logicPathFinding) {
 
         if(creep.memory.repairing && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.repairing = false;
