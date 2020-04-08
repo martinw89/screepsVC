@@ -16,7 +16,7 @@ let roleRepairer = require('role.repairer');
 let roleTower = require('role.tower');
 let logicSpawnDespawn = require('logic.spawnDespawn');
 let logicDefend = require('logic.defend');
-let logicPathFinding = require('logic.pathFinding')
+let logicPathFinding = require('logic.pathFinding');
 
 Memory.sources = {};
 for (let room in Game.rooms) {
@@ -69,16 +69,16 @@ module.exports.loop = function () {
         let creep = Game.creeps[name];
         switch(creep.memory.role) {
         case 'harvester':
-            roleHarvester.run(creep);
+            roleHarvester.run(creep, logicPathFinding);
             break;
         case 'upgrader':
-            roleUpgrader.run(creep);
+            roleUpgrader.run(creep, logicPathFinding);
             break;
         case 'builder':
-            roleBuilder.run(creep);
+            roleBuilder.run(creep, logicPathFinding);
             break;
         case 'repairer':
-            roleRepairer.run(creep);
+            roleRepairer.run(creep, logicPathFinding);
             break;
         }
     }

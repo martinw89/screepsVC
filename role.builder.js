@@ -6,12 +6,10 @@ ERR_NOT_IN_RANGE
 module
 */
 
-let logicPathFinding = require('logic.pathFinding');
-
 var roleBuilder = {
 
     /** @param {Creep} creep **/
-    run: function(creep) {
+    run: function(creep, logicPathFinding) {
 
         if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.building = false;
@@ -34,7 +32,7 @@ var roleBuilder = {
                 targets = logicPathFinding.muster(creep);
                 muster = true;
             }
-            
+
             if(creep.build(targets[0]) == ERR_NOT_IN_RANGE || muster) {
                 creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
